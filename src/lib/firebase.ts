@@ -32,15 +32,15 @@ export const firebaseApp = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// export type TodoType = {
-//   id: number;
-//   uid: string;
-//   inserted: Date;
-//   task: string;
-//   deadline: Date | null;
-//   iscomplete: boolean;
-//   sortkey: number | null;
-// };
+export type TodoType = {
+  id: number;
+  uid: string;
+  inserted: Date;
+  task: string;
+  deadline: Date | null;
+  iscomplete: boolean;
+  sortkey: number | null;
+};
 
 // useEffect(() => {
 //   //Firebase ver9 compliant (modular)
