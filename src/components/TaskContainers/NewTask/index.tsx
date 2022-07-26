@@ -5,13 +5,12 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
-import { addDoc, collection } from "firebase/firestore";
 import { HiPlusSm } from "react-icons/hi";
 import { useCallback, useMemo, useState } from "react";
 import { TaskType } from "src/lib/Datetime";
-import { db } from "src/lib/firebase";
 import { useToast } from "src/lib/ToastHooks";
 import { CaretColorProps } from "src/type/type";
+import { addTodo } from "src/lib/SupabaseClient";
 
 type Props = {
   day: TaskType;
@@ -23,7 +22,6 @@ export const NewTask = (props: Props) => {
   const [isSending, setIsSending] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [isAddTask, setAddTask] = useState<boolean>(false);
-  const [input, setInput] = useState("");
   const { errorToast } = useToast();
 
   const caretColor = useMemo<CaretColorProps>(
@@ -47,11 +45,20 @@ export const NewTask = (props: Props) => {
     }
   }, []);
 
-  const newTask = async (day: "today" | "tomorrow" | "other") => {
-    //Firebase ver9 compliant (modular)
-    await addDoc(collection(db, "todos"), { title: input });
-    setInput("");
-  };
+  const handleAddTask = useCallback(
+    async (day: "today" | "tomorrow" | "other") => {
+      if (text) {
+        const isSuccess = await addTodo(text, day);
+        if (isSuccess) {
+          updateTodo();
+          setText("");
+        } else {
+          errorToast("タスクの追加に失敗しました");
+        }
+      }
+    },
+    [text, updateTodo, errorToast]
+  );
 
   const handleClickButton = () => {
     setAddTask(true);
@@ -65,7 +72,9 @@ export const NewTask = (props: Props) => {
             <div
               className={`flex justify-center w-[22px] h-[22px] rounded-full  ring-1 ring-gray-200 mr-2`}
             >
-              <button className={`outline-none w-full h-full rounded-full`} />
+              <button
+                className={`outline-none w-full h-full rounded-full  dark:bg-darkbg`}
+              />
             </div>
             <div className="relative mb-3 ml-2 w-3/4 text-sm">
               <div
@@ -74,6 +83,7 @@ export const NewTask = (props: Props) => {
                 {text}
               </div>
               <Textarea
+                // id="FlexTextarea"
                 value={text}
                 className={`box-border block ${caretColor} min-h-8  h-full overflow-hidden text-sm absolute top-0 w-full bg-transparent outline-none resize-none`}
                 onChange={handleChangeText}
@@ -81,7 +91,7 @@ export const NewTask = (props: Props) => {
                   //同じ文言であれば編集しないようにする
                   if (!isSending) {
                     setIsSending(true);
-                    await newTask(day);
+                    await handleAddTask(day);
                     setIsSending(false);
                   }
                   setAddTask(false);
@@ -89,7 +99,7 @@ export const NewTask = (props: Props) => {
                 onKeyPress={async (e) => {
                   if (e.key === "Enter" && !isSending) {
                     setIsSending(true);
-                    await newTask(day);
+                    await handleAddTask(day);
                     setIsSending(false);
                   }
                 }}
@@ -100,9 +110,12 @@ export const NewTask = (props: Props) => {
         ) : (
           <>
             <div
-              className={`flex justify-center  w-[18px] h-[18px] rounded-full ring-2 ring-gray-300 bg-gray-300 ml-[1px]`}
+              className={`flex justify-center  w-[18px] h-[18px] rounded-full ring-2 dark:bg-gray-400 dark:ring-gray-400 ring-gray-300 bg-gray-300 ml-[1px]`}
             >
-              <HiPlusSm size={18} className="text-[#ffffff]" />
+              <HiPlusSm
+                size={18}
+                className="text-[#ffffff] dark:text-darkbg "
+              />
             </div>
             <Button
               onClick={handleClickButton}
