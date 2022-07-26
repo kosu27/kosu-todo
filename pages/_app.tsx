@@ -1,12 +1,12 @@
-import "src/styles/index.css";
+import "../src/style/index.css";
 
 import { Auth } from "@supabase/ui";
 import type { CustomAppPage } from "next/app";
 import Head from "next/head";
 import { memo, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { AuthLayout } from "src/layout";
 import { client } from "src/lib/SupabaseClient";
+import { AuthLayout } from "src/layout";
 
 const App: CustomAppPage = ({ Component, pageProps }) => {
   useEffect(() => {

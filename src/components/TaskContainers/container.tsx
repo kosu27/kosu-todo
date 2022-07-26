@@ -4,9 +4,10 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { NewTask } from "src/components/TaskContainers/NewTask";
-import { SortableItem } from "src/components/TaskContainers/sortableItem";
-import { TaskType } from "src/lib/Datetime";
-import { TodoType } from "src/lib/SupabaseClient";
+import type { TaskType } from "src/lib/Datetime";
+import type { TodoType } from "src/lib/SupabaseClient";
+
+import { SortableItem } from "./sortableItem";
 
 type Props = {
   taskType: TaskType;

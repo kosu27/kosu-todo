@@ -1,6 +1,6 @@
-import { Input } from "@chakra-ui/react";
-import { FC, useCallback } from "react";
-import { TodoType } from "src/lib/firebase";
+import type { FC } from "react";
+import { useCallback } from "react";
+import type { TodoType } from "src/lib/SupabaseClient";
 
 type Style = {
   centerColor: string;
@@ -13,7 +13,9 @@ type Style = {
 
 export const RadioButton: FC<Style> = (props) => {
   const { centerColor, handleEditIsComplete, item } = props;
-  const bgColor: string = item.iscomplete ? centerColor : "bg-white";
+  const bgColor: string = item.iscomplete
+    ? centerColor
+    : "bg-white dark:bg-[#22272E]";
 
   const handleJudgeCompleted = useCallback(() => {
     handleEditIsComplete(item.id, !item.iscomplete);
@@ -22,12 +24,12 @@ export const RadioButton: FC<Style> = (props) => {
   return (
     <>
       <div onClick={handleJudgeCompleted} className="absolute top-2">
-        <Input
+        <input
           type="radio"
+          className={`${bgColor} radio dark:checked:boxshadow-radio-dark checked:boxshadow-radio-light border-gray-200  outline-none focus:outline-none checked:outline-none`}
           readOnly
           checked={item.iscomplete}
-          className={`${bgColor} radio checked:boxshadow-radio-light border-gray-200  outline-none focus:outline-none checked:outline-none`}
-        />
+        ></input>
       </div>
     </>
   );

@@ -1,10 +1,3 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Button,
-  Textarea,
-} from "@chakra-ui/react";
 import { Auth } from "@supabase/ui";
 import { useCallback, useMemo, useState } from "react";
 import { HiPlusSm } from "react-icons/hi";
@@ -40,17 +33,15 @@ export const NewTask = (props: Props) => {
     if (e.target.value.length < 100) {
       setText(e.target.value);
     } else {
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle>100文字以内で入力してください</AlertTitle>
-      </Alert>;
+      alert("100文字以内で入力してください");
     }
   }, []);
 
   const handleAddTask = useCallback(
     async (day: "today" | "tomorrow" | "other") => {
       if (text && user) {
-        const isSuccess = await addTodo(text, day);
+        const uid = user.id;
+        const isSuccess = await addTodo(uid, text, day);
         if (isSuccess) {
           updateTodo();
           setText("");
@@ -84,7 +75,7 @@ export const NewTask = (props: Props) => {
               >
                 {text}
               </div>
-              <Textarea
+              <textarea
                 // id="FlexTextarea"
                 value={text}
                 className={`box-border block ${caretColor} min-h-8  h-full overflow-hidden text-sm absolute top-0 w-full bg-transparent outline-none resize-none`}
@@ -119,12 +110,12 @@ export const NewTask = (props: Props) => {
                 className="text-[#ffffff] dark:text-darkbg "
               />
             </div>
-            <Button
+            <button
               onClick={handleClickButton}
               className="ml-3 h-5 leading-5 placeholder:text-[#C2C6D2] text-gray-400 whitespace-nowrap border-0 focus:ring-0 caret-[#F43F5E]"
             >
               タスクを追加する
-            </Button>
+            </button>
           </>
         )}
       </div>

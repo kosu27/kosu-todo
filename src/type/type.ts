@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
-import { TodoType } from "src/lib/SupabaseClient";
+import type { Dispatch, SetStateAction } from "react";
+import type { TodoType } from "src/lib/SupabaseClient";
 
 export type CaretColorProps = "caret-today" | "caret-tomorrow" | "caret-other";
 

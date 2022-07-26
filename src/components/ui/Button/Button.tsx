@@ -1,5 +1,7 @@
-import Link, { LinkProps } from "next/link";
-import { ComponentPropsWithRef, createElement, forwardRef } from "react";
+import type { LinkProps } from "next/link";
+import Link from "next/link";
+import type { ComponentPropsWithRef } from "react";
+import { createElement, forwardRef } from "react";
 
 type Tag = "button" | "input" | "a";
 

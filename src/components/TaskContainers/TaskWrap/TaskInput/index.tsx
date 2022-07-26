@@ -1,4 +1,3 @@
-import { Alert, AlertIcon, AlertTitle, Textarea } from "@chakra-ui/react";
 import { Auth } from "@supabase/ui";
 import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
@@ -29,10 +28,7 @@ export const TaskInput = (props: Props) => {
       if (e.target.value.length < 100) {
         setText(e.target.value);
       } else {
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle>100文字以内で入力してください</AlertTitle>
-        </Alert>;
+        alert("100文字以内で入力してください");
       }
     },
     [setText]
@@ -49,9 +45,9 @@ export const TaskInput = (props: Props) => {
         errorToast("タスクの変更に失敗しました");
       }
     } else {
-      setText(item.title);
+      setText(item.task);
     }
-  }, [text, user, item.id, item.title, updateTodo, setText, errorToast]);
+  }, [text, user, item.id, item.task, updateTodo, setText, errorToast]);
 
   return (
     <>
@@ -61,14 +57,14 @@ export const TaskInput = (props: Props) => {
         >
           {text}
         </div>
-        <Textarea
+        <textarea
           // id="FlexTextarea"
           value={text}
           className={`box-border block ${caretColor} ${lineThrough}  overflow-hidden absolute top-0 w-full h-full bg-transparent outline-none resize-none`}
           onChange={handleChangeText}
           onBlur={async () => {
             //同じ文言であれば編集しないようにする
-            if (item.title !== text) {
+            if (item.task !== text) {
               setIsSending(true);
               await handleEditTask();
               setIsSending(false);
@@ -76,7 +72,7 @@ export const TaskInput = (props: Props) => {
           }}
           onKeyPress={async (e) => {
             //同じ文言であれば編集しないようにする
-            if (e.key === "Enter" && !isSending && item.title !== text) {
+            if (e.key === "Enter" && !isSending && item.task !== text) {
               e.currentTarget.blur();
               setIsSending(true);
               await handleEditTask();

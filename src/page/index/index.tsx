@@ -1,7 +1,11 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import type { FC } from "react";
+import { useCallback } from "react";
+import { useEffect, useState } from "react";
+import { Header } from "src/components/Header";
 import { TaskContainers } from "src/components/TaskContainers";
 import { taskElement } from "src/constants/TaskElement";
-import { getTodo, TodoType } from "src/lib/SupabaseClient";
+import type { TodoType } from "src/lib/SupabaseClient";
+import { getTodo } from "src/lib/SupabaseClient";
 
 export const Index: FC = () => {
   const [todoToday, setTodoToday] = useState<TodoType[]>([]);
@@ -41,6 +45,7 @@ export const Index: FC = () => {
 
   return (
     <>
+      <Header />
       <div className="px-4">
         <TaskContainers
           todoToday={todoToday}

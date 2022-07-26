@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -8,7 +7,8 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { Dispatch, FC, SetStateAction } from "react";
+import { Button } from "@supabase/ui";
+import type { Dispatch, FC, SetStateAction } from "react";
 
 type Props = {
   title: string;

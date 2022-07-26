@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .scroll-snap-none {
+    scroll-snap-type: none;
+  }
+  .scroll-snap-x {
+    scroll-snap-type: x;
+  }
+  .scroll-snap-y {
+    scroll-snap-type: y;
+  }
+  .boxshadow-radio-dark {
+    animation: boxshadow-radio-dark 1s ease-in-out;
+    box-shadow: 0 0 0 4px #22272e inset, 0 0 0 4px #22272e inset;
+  }
+  .boxshadow-radio-light {
+    box-shadow: 0 0 0 4px white inset, 0 0 0 4px white inset;
+    animation: boxshadow-radio-light 1s ease-in-out;
+  }
+}

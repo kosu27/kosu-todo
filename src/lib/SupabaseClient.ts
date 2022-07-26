@@ -1,33 +1,49 @@
 import { createClient } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
-import { getDate, getDateEnd, TaskType } from "src/lib/Datetime";
+import type { TaskType } from "src/lib/Datetime";
+import { getDate, getDateEnd } from "src/lib/Datetime";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 if (!SUPABASE_URL) {
   throw new Error("環境変数が未定義 : env.NEXT_PUBLIC_SUPABASE_URL");
 }
 if (!SUPABASE_ANON_KEY) {
-  throw new Error("環境変数が未定義 : env.NEXT_PUBLIC_SUPABASE_ANON_KEY");
+  throw new Error("環境変数が未定義 : env.NEXT_PUBLIC_SUPABASE_KEY");
 }
 
 export const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export type TodoType = {
   id: number;
-  created_at: string;
-  title: string;
+  uid: string;
+  inserted: Date;
+  task: string;
   deadline: Date | null;
   iscomplete: boolean;
   sortkey: number | null;
 };
 
-export const addTodo = async (title: string, taskType: TaskType) => {
+export type ProfileType = {
+  id: number;
+  uid: string;
+  username: string;
+  avatar: string;
+};
+
+export const addTodo = async (
+  uid: string,
+  task: string,
+  taskType: TaskType
+) => {
   const deadline = taskType == "other" ? null : getDate(taskType);
   const { error } = await client.from<TodoType>("todos").insert([
     {
-      title: title,
+      uid: uid,
+      task: task,
+      deadline: deadline,
+      iscomplete: false,
     },
   ]);
   if (error) {
@@ -71,10 +87,10 @@ export const getTodo = async (taskType: TaskType) => {
   }
 };
 
-export const editTodo = async (id: number, title: string) => {
+export const editTodo = async (id: number, task: string) => {
   const { error } = await client
     .from("todos")
-    .update({ title: title })
+    .update({ task: task })
     .eq("id", id);
 
   if (error) {
@@ -156,4 +172,65 @@ export const moveTodo = async (
   } else {
     return true;
   }
+};
+
+export const addNewProfile = async (
+  uid: string,
+  username: string,
+  avatar: string
+) => {
+  const { error } = await client
+    .from<ProfileType>("profiles")
+    .insert([{ uid: uid, username: username, avatar: avatar }]);
+  if (error) {
+    return false;
+  }
+  return true;
+};
+
+export const getProfile = async (uid: string) => {
+  const { data, error } = await client
+    .from<ProfileType>("profiles")
+    .select("*")
+    .limit(1)
+    .single();
+  if (error || !data) {
+    return null;
+  }
+  if (data.avatar == "storage") {
+    data.avatar = await getAvatarUrl(uid);
+  }
+  return data;
+};
+
+export const updateProfile = async (
+  uid: string,
+  username: string,
+  avatar: string
+) => {
+  const { error } = await client
+    .from("profiles")
+    .update({
+      username: username,
+      avatar: avatar,
+    })
+    .eq("uid", uid);
+  return error ? false : true;
+};
+
+export const uploadAvatar = async (uid: string, file: File) => {
+  const { error } = await client.storage
+    .from("avatars")
+    .upload(`avatar_${uid}.jpg`, file, { upsert: true });
+  return error ? false : true;
+};
+
+const getAvatarUrl = async (uid: string) => {
+  const { error, signedURL } = await client.storage
+    .from("avatars")
+    .createSignedUrl(`avatar_${uid}.jpg`, 3600);
+  if (!error && signedURL) {
+    return signedURL;
+  }
+  return "";
 };

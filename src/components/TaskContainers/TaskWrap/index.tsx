@@ -1,17 +1,15 @@
-import { FC, useCallback, useMemo } from "react";
-import { TaskInput } from "src/components/TaskContainers/TaskWrap/TaskInput";
-import { RadioButton } from "src/components/ui/RadioButton/RadioButton";
-import { useToast } from "src/lib/ToastHooks";
-import { BgColorProps, CaretColorProps, DayProps } from "src/type/type";
+import { Auth } from "@supabase/ui";
+import type { FC } from "react";
+import { useMemo } from "react";
+import { useCallback } from "react";
 import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
-import {
-  addTodo,
-  deleteTodo,
-  editIsComplete,
-  TodoType,
-} from "src/lib/SupabaseClient";
-import { Auth } from "@supabase/ui";
+import { TaskInput } from "src/components/TaskContainers/TaskWrap/TaskInput";
+import { RadioButton } from "src/components/ui/RadioButton";
+import type { TodoType } from "src/lib/SupabaseClient";
+import { addTodo, deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
+import type { BgColorProps, CaretColorProps, DayProps } from "src/type/type";
 
 type Props = {
   day: DayProps;
@@ -75,7 +73,8 @@ export const TaskWrap: FC<Props> = (props) => {
   const handleCopyTask = useCallback(
     async (day: "today" | "tomorrow" | "other") => {
       if (text && user) {
-        const isSuccess = await addTodo(text, day);
+        const uid = user.id;
+        const isSuccess = await addTodo(uid, text, day);
         if (isSuccess) {
           updateTodo();
         } else {

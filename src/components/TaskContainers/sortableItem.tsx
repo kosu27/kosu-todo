@@ -1,9 +1,10 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+// import { useState } from "react";
 import { TaskWrap } from "src/components/TaskContainers/TaskWrap";
-import { TaskType } from "src/lib/Datetime";
-import { TodoType } from "src/lib/SupabaseClient";
+import type { TaskType } from "src/lib/Datetime";
+import type { TodoType } from "src/lib/SupabaseClient";
 
 type Props = {
   taskType: TaskType;
@@ -13,7 +14,7 @@ type Props = {
 
 export const SortableItem = (props: Props) => {
   const { taskType, todoTask, updateTodo } = props;
-  const [text, setText] = useState<string>(todoTask.title);
+  const [text, setText] = useState<string>(todoTask.task);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: String(todoTask.id) });
