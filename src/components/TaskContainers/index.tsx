@@ -1,28 +1,32 @@
-import {
-  closestCorners,
-  DndContext,
+import type {
   DragEndEvent,
   DragOverEvent,
   DragStartEvent,
-  KeyboardSensor,
   Over,
+} from "@dnd-kit/core";
+// import { DragOverlay } from "@dnd-kit/core";
+import {
+  closestCorners,
+  DndContext,
+  // DragOverlay,
+  KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { Container } from "src/components/TaskContainers/container";
-import { TaskType } from "src/lib/Datetime";
-import { getTodo, moveTodo, TodoType } from "src/lib/SupabaseClient";
+import type { Dispatch, SetStateAction } from "react";
+import { useCallback } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import type { TaskType } from "src/lib/Datetime";
+import type { TodoType } from "src/lib/SupabaseClient";
+import { getTodo } from "src/lib/SupabaseClient";
+import { moveTodo } from "src/lib/SupabaseClient";
 import { useToast } from "src/lib/ToastHooks";
-import { MapTaskElement } from "src/type/type";
+import type { MapTaskElement } from "src/type/type";
+
+import { Container } from "./container";
 
 type Props = {
   todoToday: TodoType[];

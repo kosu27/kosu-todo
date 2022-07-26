@@ -5,12 +5,13 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
-import { HiPlusSm } from "react-icons/hi";
+import { Auth } from "@supabase/ui";
 import { useCallback, useMemo, useState } from "react";
-import { TaskType } from "src/lib/Datetime";
-import { useToast } from "src/lib/ToastHooks";
-import { CaretColorProps } from "src/type/type";
+import { HiPlusSm } from "react-icons/hi";
+import type { TaskType } from "src/lib/Datetime";
 import { addTodo } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
+import type { CaretColorProps } from "src/type/type";
 
 type Props = {
   day: TaskType;
@@ -18,6 +19,7 @@ type Props = {
 };
 
 export const NewTask = (props: Props) => {
+  const { user } = Auth.useUser();
   const { day, updateTodo } = props;
   const [isSending, setIsSending] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
@@ -47,7 +49,7 @@ export const NewTask = (props: Props) => {
 
   const handleAddTask = useCallback(
     async (day: "today" | "tomorrow" | "other") => {
-      if (text) {
+      if (text && user) {
         const isSuccess = await addTodo(text, day);
         if (isSuccess) {
           updateTodo();
@@ -57,7 +59,7 @@ export const NewTask = (props: Props) => {
         }
       }
     },
-    [text, updateTodo, errorToast]
+    [text, user, updateTodo, errorToast]
   );
 
   const handleClickButton = () => {

@@ -1,10 +1,11 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import "src/styles/index.css";
+
 import { Auth } from "@supabase/ui";
 import type { CustomAppPage } from "next/app";
 import Head from "next/head";
 import { memo, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { AuthLayout } from "src/layout/AuthLayout";
+import { AuthLayout } from "src/layout";
 import { client } from "src/lib/SupabaseClient";
 
 const App: CustomAppPage = ({ Component, pageProps }) => {
@@ -28,15 +29,13 @@ const App: CustomAppPage = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>Todo App</title>
+        <title>QinTodo</title>
       </Head>
-      <div className="text-slate-800 bg-white">
+      <div className="text-slate-800 dark:text-[#C2C6D2] bg-white dark:bg-darkbg">
         <Auth.UserContextProvider supabaseClient={client}>
           <AuthLayout>
-            <ChakraProvider>
-              <Toaster />
-              <Component {...pageProps} />
-            </ChakraProvider>
+            <Toaster />
+            <Component {...pageProps} />
           </AuthLayout>
         </Auth.UserContextProvider>
       </div>

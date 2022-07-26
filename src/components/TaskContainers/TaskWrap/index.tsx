@@ -11,6 +11,7 @@ import {
   editIsComplete,
   TodoType,
 } from "src/lib/SupabaseClient";
+import { Auth } from "@supabase/ui";
 
 type Props = {
   day: DayProps;
@@ -22,6 +23,7 @@ type Props = {
 
 export const TaskWrap: FC<Props> = (props) => {
   const { day, item, setText, text, updateTodo } = props;
+  const { user } = Auth.useUser();
   const { errorToast } = useToast();
 
   const caretColor = useMemo<CaretColorProps>(
@@ -46,28 +48,33 @@ export const TaskWrap: FC<Props> = (props) => {
 
   const handleEditIsComplete = useCallback(
     async (itemId: number, itemiscomplete: boolean) => {
-      const isSuccess = await editIsComplete(itemId, itemiscomplete);
-      if (isSuccess) {
-        updateTodo();
+      if (user) {
+        const isSuccess = await editIsComplete(itemId, itemiscomplete);
+        if (isSuccess) {
+          updateTodo();
+        } else {
+          errorToast("isComplete処理に失敗しました。");
+        }
       } else {
-        errorToast("isComplete処理に失敗しました。");
       }
     },
-    [updateTodo, errorToast]
+    [user, updateTodo, errorToast]
   );
 
   const handleDelete = async (id: number) => {
-    const isSuccess = await deleteTodo(id);
-    if (isSuccess) {
-      updateTodo();
-    } else {
-      errorToast("タスクの削除に失敗しました");
+    if (user) {
+      const isSuccess = await deleteTodo(id);
+      if (isSuccess) {
+        updateTodo();
+      } else {
+        errorToast("タスクの削除に失敗しました");
+      }
     }
   };
 
   const handleCopyTask = useCallback(
     async (day: "today" | "tomorrow" | "other") => {
-      if (text) {
+      if (text && user) {
         const isSuccess = await addTodo(text, day);
         if (isSuccess) {
           updateTodo();
@@ -76,7 +83,7 @@ export const TaskWrap: FC<Props> = (props) => {
         }
       }
     },
-    [text, updateTodo, errorToast]
+    [text, user, updateTodo, errorToast]
   );
 
   return (

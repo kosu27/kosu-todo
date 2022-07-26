@@ -1,8 +1,11 @@
 import { Alert, AlertIcon, AlertTitle, Textarea } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { editTodo, TodoType } from "src/lib/SupabaseClient";
+import { Auth } from "@supabase/ui";
+import type { Dispatch, SetStateAction } from "react";
+import { useCallback, useState } from "react";
+import type { TodoType } from "src/lib/SupabaseClient";
+import { editTodo } from "src/lib/SupabaseClient";
 import { useToast } from "src/lib/ToastHooks";
-import { CaretColorProps } from "src/type/type";
+import type { CaretColorProps } from "src/type/type";
 
 type Props = {
   item: TodoType;
@@ -14,6 +17,7 @@ type Props = {
 
 export const TaskInput = (props: Props) => {
   const { caretColor, item, setText, text, updateTodo } = props;
+  const { user } = Auth.useUser();
   const [isSending, setIsSending] = useState<boolean>(false);
   const { errorToast } = useToast();
 
@@ -36,7 +40,7 @@ export const TaskInput = (props: Props) => {
 
   //編集処理を書く
   const handleEditTask = useCallback(async () => {
-    if (text) {
+    if (text && user) {
       const isSuccess = await editTodo(item.id, text);
       if (isSuccess) {
         updateTodo();
@@ -47,7 +51,7 @@ export const TaskInput = (props: Props) => {
     } else {
       setText(item.title);
     }
-  }, [text, item.id, item.title, updateTodo, setText, errorToast]);
+  }, [text, user, item.id, item.title, updateTodo, setText, errorToast]);
 
   return (
     <>
