@@ -29,7 +29,7 @@ const App: CustomAppPage = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>QinTodo</title>
+        <title>Todo</title>
       </Head>
       <div className="text-slate-800 dark:text-[#C2C6D2] bg-white dark:bg-darkbg">
         <Auth.UserContextProvider supabaseClient={client}>

@@ -58,15 +58,7 @@ export const Header = () => {
     <header>
       <div className="flex justify-around items-center p-5 dark:bg-[#353e49]">
         <Link href="/" passHref>
-          <a>
-            <Image
-              className="cursor-pointer"
-              src="/qintodo_logo.svg"
-              alt="QinTodo"
-              width={150}
-              height={50}
-            />
-          </a>
+          <a></a>
         </Link>
         {user ? (
           <Popover>
