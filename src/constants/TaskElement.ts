@@ -1,4 +1,4 @@
-import { TaskElement } from "src/type/type";
+import type { TaskElement } from "src/type/type";
 
 export const taskElement: TaskElement[] = [
   {
