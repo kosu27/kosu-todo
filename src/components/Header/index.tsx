@@ -1,6 +1,5 @@
 import { Button, Popover, TabPanel } from "@chakra-ui/react";
 import { Auth, IconSettings } from "@supabase/ui";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
@@ -29,11 +28,11 @@ export const Header = () => {
             ? user.user_metadata.avatar_url
             : "";
           const isOk = await addNewProfile(uid, username, avatar_url);
-          if (!isOk) {
-            errorToast("プロフィールの新規登録に失敗しました。");
-          } else {
-            setAvatar(avatar_url);
-          }
+          // if (!isOk) {
+          //   errorToast("プロフィールの新規登録に失敗しました。");
+          // } else {
+          //   setAvatar(avatar_url);
+          // }
         }
       }
     },
@@ -66,26 +65,26 @@ export const Header = () => {
               <Avatar image={avatar} size="small" isRounded={true} />
             </Button>
 
-            <TabPanel className="flex overflow-hidden absolute right-0 z-10 flex-col py-3 mt-2 w-40 bg-white rounded-3xl drop-shadow-xl sm:w-80">
-              <Button>
-                <div
-                  onClick={handleSetting}
-                  className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold dark:text-slate-800 hover:bg-slate-100"
-                >
-                  <IconSettings size={19} />
-                  <p>設定</p>
-                </div>
-              </Button>
-              <Button>
-                <div
-                  className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
-                  onClick={handleLogout}
-                >
-                  <HiOutlineLogout size={20} />
-                  <p>ログアウト</p>
-                </div>
-              </Button>
-            </TabPanel>
+            {/* <TabPanel className="flex overflow-hidden absolute right-0 z-10 flex-col py-3 mt-2 w-40 bg-white rounded-3xl drop-shadow-xl sm:w-80"> */}
+            <Button>
+              <div
+                onClick={handleSetting}
+                className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold dark:text-slate-800 hover:bg-slate-100"
+              >
+                <IconSettings size={19} />
+                <p>設定</p>
+              </div>
+            </Button>
+            <Button>
+              <div
+                className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
+                onClick={handleLogout}
+              >
+                <HiOutlineLogout size={20} />
+                <p>ログアウト</p>
+              </div>
+            </Button>
+            {/* </TabPanel> */}
           </Popover>
         ) : (
           <div className="w-10 h-10"></div>
