@@ -1,7 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
-// import { useState } from "react";
 import { TaskWrap } from "src/components/TaskContainers/TaskWrap";
 import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
@@ -32,10 +31,7 @@ export const SortableItem = (props: Props) => {
       className="group relative w-full"
     >
       <div className="absolute top-0 w-full" {...listeners}>
-        <div
-          className="box-border overflow-hidden my-3 ml-10 w-3/5 text-sm text-blue-800/0 whitespace-pre-wrap break-words"
-          // aria-hidden="true"
-        >
+        <div className="box-border overflow-hidden my-3 ml-10 w-3/5 text-sm text-blue-800/0 whitespace-pre-wrap break-words">
           {text}
         </div>
       </div>
