@@ -23,24 +23,22 @@ export const AuthLayout: CustomLayout = (props: Props) => {
   }, []);
 
   return (
-    <>
-      <div className="flex flex-col min-h-screen">
-        <main className="flex-1">
-          <LayoutErrorBoundary>
-            {isMounted && user ? (
-              <div>{children}</div>
-            ) : (
-              <div>
-                <Auth
-                  supabaseClient={client}
-                  providers={["google"]}
-                  socialColors
-                />
-              </div>
-            )}
-          </LayoutErrorBoundary>
-        </main>
-      </div>
-    </>
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-1">
+        <LayoutErrorBoundary>
+          {isMounted && user ? (
+            <div>{children}</div>
+          ) : (
+            <div>
+              <Auth
+                supabaseClient={client}
+                providers={["google"]}
+                socialColors
+              />
+            </div>
+          )}
+        </LayoutErrorBoundary>
+      </main>
+    </div>
   );
 };
