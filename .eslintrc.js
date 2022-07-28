@@ -8,7 +8,6 @@ module.exports = {
     "sort-destructure-keys",
     "tailwindcss",
     "import-access",
-    "testing-library",
   ],
   extends: [
     "plugin:@typescript-eslint/recommended",
@@ -116,7 +115,6 @@ module.exports = {
     },
     {
       files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-      extends: ["plugin:testing-library/react"],
     },
   ],
 };
