@@ -3,15 +3,8 @@ import toast from "react-hot-toast";
 import type { TaskType } from "src/lib/Datetime";
 import { getDate, getDateEnd } from "src/lib/Datetime";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!SUPABASE_URL) {
-  throw new Error("環境変数が未定義 : env.NEXT_PUBLIC_SUPABASE_URL");
-}
-if (!SUPABASE_ANON_KEY) {
-  throw new Error("環境変数が未定義 : env.NEXT_PUBLIC_SUPABASE_ANON_KEY");
-}
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
