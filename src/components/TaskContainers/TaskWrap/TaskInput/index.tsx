@@ -1,3 +1,4 @@
+import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 import { Auth } from "@supabase/ui";
 import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
@@ -28,7 +29,10 @@ export const TaskInput = (props: Props) => {
       if (e.target.value.length < 100) {
         setText(e.target.value);
       } else {
-        alert("100文字以内で入力してください");
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>100文字以内で入力してください！</AlertTitle>
+        </Alert>;
       }
     },
     [setText]

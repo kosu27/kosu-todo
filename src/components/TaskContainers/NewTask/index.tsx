@@ -1,3 +1,4 @@
+import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 import { Auth } from "@supabase/ui";
 import { useCallback, useMemo, useState } from "react";
 import { HiPlusSm } from "react-icons/hi";
@@ -33,7 +34,10 @@ export const NewTask = (props: Props) => {
     if (e.target.value.length < 100) {
       setText(e.target.value);
     } else {
-      alert("100文字以内で入力してください");
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>100文字以内で入力してください！</AlertTitle>
+      </Alert>;
     }
   }, []);
 
