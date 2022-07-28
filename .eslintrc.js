@@ -25,7 +25,7 @@ module.exports = {
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "func-style": ["error", "expression"],
-    "arrow-body-style": ["error", "always"],
+    // "arrow-body-style": ["error", "always"],
     "no-restricted-imports": [
       "error",
       { paths: [{ name: "react", importNames: ["default"] }] },
@@ -48,7 +48,7 @@ module.exports = {
     "import/newline-after-import": "error",
     "import/no-default-export": "error",
     "import-access/jsdoc": "error",
-    "simple-import-sort/imports": "error",
+    // "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "sort-destructure-keys/sort-destructure-keys": 2,
 
@@ -64,33 +64,33 @@ module.exports = {
       "error",
       { varsIgnorePattern: "^_", argsIgnorePattern: "^_" },
     ],
-    "@typescript-eslint/naming-convention": [
-      "error",
-      // typeLike (class, interface, typeAlias, enum, typeParameter) は PascalCase
-      {
-        selector: ["typeLike"],
-        format: ["PascalCase"],
-      },
-      // function, method (classMethod, objectLiteralMethod, typeMethod) は camelCase
-      {
-        selector: ["function", "method"],
-        format: ["camelCase"],
-      },
-      // function 以外の variable, parameter は camelCase
-      {
-        selector: ["variable", "parameter"],
-        types: ["boolean", "string", "number", "array"],
-        format: ["camelCase"],
-      },
-      // boolean の variable は特定の prefix をつけた状態で PascalCase
-      {
-        selector: "variable",
-        types: ["boolean"],
-        format: ["PascalCase"],
-        prefix: ["no", "is", "has", "should"],
-        filter: { regex: "^_", match: false },
-      },
-    ],
+    // "@typescript-eslint/naming-convention": [
+    //   "error",
+    //   // typeLike (class, interface, typeAlias, enum, typeParameter) は PascalCase
+    //   {
+    //     selector: ["typeLike"],
+    //     format: ["PascalCase"],
+    //   },
+    //   // function, method (classMethod, objectLiteralMethod, typeMethod) は camelCase
+    //   {
+    //     selector: ["function", "method"],
+    //     format: ["camelCase"],
+    //   },
+    //   // function 以外の variable, parameter は camelCase
+    //   {
+    //     selector: ["variable", "parameter"],
+    //     types: ["boolean", "string", "number", "array"],
+    //     format: ["camelCase"],
+    //   },
+    //   // boolean の variable は特定の prefix をつけた状態で PascalCase
+    //   {
+    //     selector: "variable",
+    //     types: ["boolean"],
+    //     format: ["PascalCase"],
+    //     prefix: ["no", "is", "has", "should"],
+    //     filter: { regex: "^_", match: false },
+    //   },
+    // ],
 
     // jsx-a11y
     "jsx-a11y/no-autofocus": "off",
