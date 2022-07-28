@@ -4,11 +4,9 @@ import type {
   DragStartEvent,
   Over,
 } from "@dnd-kit/core";
-// import { DragOverlay } from "@dnd-kit/core";
 import {
   closestCorners,
   DndContext,
-  // DragOverlay,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -279,7 +277,6 @@ export const TaskContainers = (props: Props) => {
           />
         </div>
       </div>
-      {/* <DragOverlay>{activeId ? <TaskWrap /> : null}</DragOverlay> */}
     </DndContext>
   );
 };
